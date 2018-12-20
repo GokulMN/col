@@ -130,3 +130,361 @@ stage('build customer app code') {
         }
 }
 }
+
+
+
+
+FROM openjdk:8-jdk-alpine
+WORKDIR /usr/src/app
+COPY . .
+EXPOSE 3001
+CMD java -jar target/*.jar
+
+
+
+pipeline {
+ agent any
+stages {
+
+ stage('build customer app code') { 
+ steps {
+  script {
+       sh 'sudo apt install -y maven'
+        sh 'mvn clean install'
+    }
+  }
+ }
+ stage('Junit Test') {
+            steps {
+                sh 'mvn test'
+            }
+ }
+  stage('docker images code') { 
+ steps {
+  script {
+       sh 'docker build -t gokulmn/project .'
+    }
+  }
+ }
+  stage('docker images Run') { 
+ steps {
+  script {
+       sh 'sudo docker container run -p 3000:8090 -v /var/run/docker.sock:/var/run/docker.sock -d gokulmn/project'
+    }
+  }
+ }
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++====
+
+    
+stage('Checkout: Code') {
+steps {sh "mkdir -p $WORKSPACE/repo;\
+git config --global user.email 'mn.gokul12@gmail.com';\
+git config --global user.name 'GokulMN';\
+git clone https://github.com/GokulMN/ninja-dashboard-maven "
+}
+}    
+
+stage('Running python') {
+steps {
+sh "pwd"
+sh"pip3 install quandl "
+sh "pip3 install pandas"
+sh "pip3 install datetime "
+sh "pip3 install numpy "
+sh " python3 ./ninja-dashboard-maven/prepare_data/src/process_data-p1.py"
+sh " python3 ./ninja-dashboard-maven/prepare_data/src/process_data-p2.py"
+sh " python3 ./ninja-dashboard-maven/prepare_data/src/process_data-p3.py"
+}
+}
+
+=+++++========++
+
+
+
+1  ll
+    2  sudo yu, install git
+    3  sudo yum install git
+    4  git --version
+    5  sudo yum update
+    6  ll
+    7  mkdir mng
+    8  ll
+    9  cd mng
+   10  git --version
+   11  git config --global user.name"GOKULMN"
+   12  git config --global user.email mn.gokul12@gmail.com
+   13  ll
+   14  ssh -keygen -trsa -b 4096
+   15  ssh-keygen -trsa -b 4096
+   16  cat /home/centos/.ssh/id_rsa.pub
+   17  cat /home/centos/.ssh/id_rsa/git_key
+   18  ll
+   19  cat git_key
+   20  cat git_key.pub
+   21  git clone https://github.com/GokulMN/sort_number
+   22  ll
+   23  cd sort_number
+   24  ll
+   25  cd ..
+   26  git status
+   27  ll
+   28  cd ..
+   29  ll
+   30  gradle_work
+   31  mkdir gradle_work
+   32  ll
+   33  cd gradle_work/
+   34  git clone https://github.com/dsarkar123/cicd-pipeline-gradle.git
+   35  ll
+   36  \
+   37  ll
+   38  cd cicd-pipeline-gradle
+   39  ll
+   40  cd ..
+   41  ll
+   42  git clone https://github.com/dsarkar123/cicd-pipeline-gradle.git
+   43  ll
+   44  cd .ssh
+   45  ll
+   46  sudo yum install java-1.8.0-openjdk-devel
+   47  java
+   48  java --version
+   49  sudo yum install java-1.8.0-openjdk
+   50  java
+   51  java -version
+   52  echo $PATH
+   53  cd /usr/local/bin
+   54  ll
+   55  cd gradle_work
+   56  cd ..
+   57  ll
+   58  cd ..
+   59  ll
+   60  cd ..
+   61  ll
+   62  cd tmp
+   63  ll
+   64  cd
+   65  cd media
+   66  cd home
+   67  ll
+   68  cd gradle_work/
+   69  ll
+   70  cd cicd-pipeline-gradle/
+   71  \ll
+   72  ll
+   73  vi  build.gradle
+   74  ./build.gradle
+   75*
+   76  ./build.gradle build
+   77  chmod 777 build.gradle
+   78  ./build.gradle build
+   79  vi  build.gradle
+   80  ./build.gradle build
+   81  vi  build.gradle
+   82  gradlew build
+   83  ./gradlew build
+   84* ./build.gradle
+   85  ./gradlew build
+   86  vi build.gradle
+   87  ./gradlew build
+   88  vi build.gradle
+
+   99  ll
+  100  vi .gitignore
+  101  git status
+  102* git add
+  103  git status
+  104  git commit -m "Build with Gradle"
+  105  git push
+  106  git push -set -upstream origin mybranch
+  107  git push --set -upstream origin mybranch
+  108  git pus
+  109  git push
+  110  git config --global push.default matching
+  111  git push
+  112  ll
+  113  cd ..
+  114  git push
+  115  ll
+  116  cd cicd-pipeline-gradle/
+  117  git push
+  118  cd ..
+  119  ll
+  120  git config.user
+  121  git config --global user.Name "GokulMN"
+  122  cd cicd-pipeline-gradle
+  123  ll
+  124  cd gradle_work/
+  125  cdc
+  126  cd cicd-pipeline-gradle/
+  127  ll
+  128  git push
+  129  git config --global user.email mn.gokul12@gmail.com
+  130  git push
+  131  cd ..
+  132  wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins.io/redhat-stable/jenkins.repo
+  133  ll
+  134  cd  mng
+
+
+  138  sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins.io/redhat-stable/jenkins.repo
+
+
+  144  sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key
+  146  sudo yum install jenkins-2.121.1
+
+  149  sudo systemctl enable jenkins
+  150  sudo systemctl start jenkins
+  151  sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
+
+5944ed7e27371053189baafdcf3aa9f34e3e33c8 
+
+
+pipeline {
+  agent any 
+   stages {
+  stage ('Build'){
+  steps {
+    echo 'Running Build Automation'
+    sh './gradlew build --no-daemon'
+    archiveArtifacts artifacts: 'dist/sampleapp.zip'
+    }
+   }
+  }
+}
+
+
+
+
+You need to modify the permission for jenkins user so that you can run the shell commands. You can install the jenkins as as service (download the rpm package), You might need to change the ports because by default it runs http on 8080 and AJP on 8009 port.
+
+
+
+Following process is for CentOS
+1. Open up the this script (using VIM or other editor):
+
+vim /etc/sysconfig/jenkins
+2. Find this $JENKINS_USER and change to “root”:
+
+$JENKINS_USER="root"
+3. Then change the ownership of Jenkins home, webroot and logs:
+
+chown -R root:root /var/lib/jenkins
+chown -R root:root /var/cache/jenkins
+chown -R root:root /var/log/jenkins
+4) Restart Jenkins and check the user has been changed:
+
+service jenkins restart
+ps -ef | grep jenkins
+
+
+_______________________________________________________---
+-_---------_--_--__--__---_-_----____--_-_-__--
+
+
+    4  docker run hello-world
+
+   30  pwd
+   31  git clone https://github.com/GokulMN/cicd-pipeline-gradle.git
+   32  git config --global user.name "GokulMN"
+   33  git config --global user.email mn.gokul12@gmail.com
+
+   35  ssh-keygen -trsa -b 4096
+
+   47  cat /home/centos/.ssh/id_rsa.pub
+   48  git clone .https://github.com/GokulMN/cicd-pipeline-gradle
+   49  git clone https://github.com/GokulMN/cicd-pipeline-gradle
+   50  ll
+   51  cd cicd-pipeline-gradle/
+   52  ll
+
+   56  sudo docker build -t mngokul/js .
+   57  ll
+   58  vi Dockerfile
+   59  sudo docker build -t mngokul/js .
+
+   63  sudo docker build -t mngokul/js .
+
+
+   67  docker images
+   68*
+   69  ps -ef |grep docker
+   70*
+   71  sudo docker ps
+  
+
+   76  sudo docker stop 507ab04a4047
+   77  sudo docker run -p 8081:8081 -d mngokul/js
+   78  sudo docker ps
+   79  sudo docker stop ca4232f6b821
+   80  sudo systemctl stop jenkins
+   81  sudo docker run -p 8080:8080 -d mngokul/js
+   82  ll
+   83  vi Dockerfile
+
+   86  sudo docker stop 87b5e6cabd3d
+   87  sudo docker run -p 8080:3000 -d mngokul/js
+   88  sudo docker ps
+
+   90  docker exec -it 56cf2b8e4743 bash
+
+
+
+  133  cleatr
+  134  clear
+  135  control ps
+  136  docker  ps
+  137  sudo docker run -p 8080:3000 -d mngokul/ub
+  138  docker exec -it bash
+  139  docker  ps
+  140  docker exec -it 36f9796eaf9a  bash
+  141  cat /etc/lsb-release
+  142   ls -l /etc |grep rel
+  143  . cat /etc/os-release
+  144  cat /etc/os-release
+  145  docker exec -it 36f9796eaf9a  bash
+
+---------------------------------
+
+18.236.117.232
+
+-------------------
+sudo docker container run -p 8080:8080 -v /var/run/docker.sock:/var/run/docker.sock -d mngokul/d_jen
+
+----------------------------
+
+
+      sh  'docker run -p 8090:3001 -d rakeshraheja89/project'
+       sh "docker login -u=$env.user -p=$env.password"
+        sh "docker push rakeshraheja89/project"
+        sh 'docker run rakeshraheja89/project'
+
+
