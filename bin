@@ -1,0 +1,132 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent any
+    
+stages {
+    
+stage('Checkout: Code') {
+steps {
+    
+sh " rm -r $WORKSPACE/repo;\
+mkdir -p $WORKSPACE/repo;\
+git config --global user.email 'mn.gokul12@gmail.com';\
+git config --global user.name 'GokulMN';\
+git clone https://github.com/GokulMN/ninja-dashboard-maven "
+}
+}
+stage('Running python') {
+steps {
+sh "cd :/var/jenkins_home/workspace/app/ninja-dashboard-maven/prepare_data/src"
+sh "pwd"
+sh " python "
+}
+}
+}
+}
+
+-------
+cd ..;\
+cd ..;\
+pwd;\
+rm -r workspace;\
+
+------------------
+
+sudo apt-get update
+sudo apt-get -y upgrade
+sudo apt-get install -y python3-pip
+pip3 install 
+-----------------------
+
+/var/jenkins_home/workspace/app/ninja-dashboard-maven/prepare_data
+
+/var/jenkins_home
+
+/var/jenkins_home/workspace/app/ninja-dashboard-maven/target
+
+
+--------------------------------------------------
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+##################################
+ #!/usr/bin/env groovy
+
+pipeline {
+    agent any
+
+stages {
+    
+stage('Checkout: Code') {
+steps {sh "mkdir -p $WORKSPACE/repo;\
+git config --global user.email 'mn.gokul12@gmail.com';\
+git config --global user.name 'GokulMN';\
+git clone https://github.com/GokulMN/ninja-dashboard-maven "
+}
+}    
+
+stage('Running python') {
+steps {
+sh "pwd"
+sh"pip3 install quandl "
+sh "pip3 install pandas"
+sh "pip3 install datetime "
+sh "pip3 install numpy "
+sh " python3 ./ninja-dashboard-maven/prepare_data/src/process_data-p1.py"
+sh " python3 ./ninja-dashboard-maven/prepare_data/src/process_data-p2.py"
+sh " python3 ./ninja-dashboard-maven/prepare_data/src/process_data-p3.py"
+}
+}
+}
+}
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#####################
+--------------------------------------
+#!/usr/bin/env groovy
+
+pipeline {
+    agent any
+
+stages {
+    
+stage('Checkout: Code') {
+steps {sh "mkdir -p $WORKSPACE/repo;\
+git config --global user.email 'mn.gokul12@gmail.com';\
+git config --global user.name 'GokulMN';\
+git clone https://github.com/GokulMN/ninja-dashboard-maven "
+}
+}    
+
+stage('Running python') {
+steps {
+sh "pwd"
+sh"pip3 install quandl "
+sh "pip3 install pandas"
+sh "pip3 install datetime "
+sh "pip3 install numpy "
+sh " python3 ./ninja-dashboard-maven/prepare_data/src/process_data-p1.py"
+sh " python3 ./ninja-dashboard-maven/prepare_data/src/process_data-p2.py"
+sh " python3 ./ninja-dashboard-maven/prepare_data/src/process_data-p3.py"
+}
+}
+stage('build customer app code') { 
+ steps{
+  script { 
+       sh 'sudo apt install -y maven'
+        sh"pwd"
+        sh 'mvn -f $WORKSPACE/ninja-dashboard-maven/pom.xml clean install'
+    }
+  }
+ }
+ stage('Test') {
+            steps {
+                sh 'mvn -f $WORKSPACE/ninja-dashboard-maven/pom.xml test'
+            }
+            post {
+                always {
+                    junit '$WORKSPACE/ninja-dashboard-maven/target/*.xml'
+                } 
+            }
+        }
+}
+}
