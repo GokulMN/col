@@ -11,8 +11,6 @@ RUN yum -y install libdbi libdbi-devel libtool-ltdl libtool-ltdl-devel db4 db4-d
 
 RUN yum -y install wget 
 
-RUN cd gnucobol-3.0-rc1 && ./configure --without-db && make && make check && make install 
-
  RUN ldconfig 
  RUN cobc -V 
  RUN export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH 
